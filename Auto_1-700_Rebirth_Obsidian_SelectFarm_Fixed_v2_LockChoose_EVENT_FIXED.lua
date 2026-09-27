@@ -4339,17 +4339,12 @@ AutoSpecialSkillBox:AddToggle("AutoSkillPsi", {
     end
 })
 local AutoPopBox = Tab2:AddRightGroupbox("Auto Special Skill")
-local Box = Tab2:AddRightGroupbox("Controls")
+local TestBox = Tab2:AddRightGroupbox("Test")
 
-ControlsBox:AddToggle("TestToggle", {
-    Text = "On / Off",
+TestBox:AddToggle("TestToggle", {
+    Text = "ON / OFF",
     Default = false,
-
     Callback = function(Value)
-        -- Không có code chức năng ở đây
-    end,
+        -- Không có code
+    end
 })
-
-Library:OnUnload(function()
-    print("Obsidian unloaded")
-end)
