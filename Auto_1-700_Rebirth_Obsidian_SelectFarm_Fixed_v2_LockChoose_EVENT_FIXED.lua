@@ -4263,3 +4263,78 @@ CooldownBox:AddButton({
     end,
 })
                     
+--// AUTO SPECIAL SKILL
+local AutoSpecialSkillBox = Tab2:AddLeftGroupbox("Auto Special Skill")
+
+local AutoSkillPsiEnabled = false
+local AutoSkillPsiThread = nil
+
+local RS = game:GetService("ReplicatedStorage")
+
+local ExecuteSkill =
+    RS:WaitForChild("Packages")
+    :WaitForChild("_Index")
+    :WaitForChild("sleitnick_knit@1.4.7")
+    :WaitForChild("knit")
+    :WaitForChild("Services")
+    :WaitForChild("SkillManagerV2")
+    :WaitForChild("RE")
+    :WaitForChild("ExecuteSkill")
+
+local PsiSkills = {
+    "Weapons_13_3",
+    "Weapons_13_2",
+    "Weapons_13_1"
+}
+
+local TargetPos = Vector3.new(
+    -310.96923828125,
+    17.601951599121094,
+    -136.85122680664062
+)
+
+AutoSpecialSkillBox:AddToggle("AutoSkillPsi", {
+    Text = "Auto skill Psi",
+    Default = false,
+
+    Callback = function(Value)
+        AutoSkillPsiEnabled = Value
+
+        if not Value then
+            return
+        end
+
+        if AutoSkillPsiThread then
+            return
+        end
+
+        AutoSkillPsiThread = task.spawn(function()
+
+            while AutoSkillPsiEnabled do
+
+                for _, SkillId in ipairs(PsiSkills) do
+
+                    if not AutoSkillPsiEnabled then
+                        break
+                    end
+
+                    pcall(function()
+                        ExecuteSkill:FireServer(
+                            SkillId,
+                            {
+                                TargetPos = TargetPos
+                            },
+                            4
+                        )
+                    end)
+
+                    task.wait(0.1)
+                end
+
+                task.wait(0.1)
+            end
+
+            AutoSkillPsiThread = nil
+        end)
+    end
+})
