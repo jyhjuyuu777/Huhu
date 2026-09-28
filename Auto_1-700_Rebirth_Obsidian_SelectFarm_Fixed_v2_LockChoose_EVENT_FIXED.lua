@@ -4264,7 +4264,7 @@ CooldownBox:AddButton({
 })
                     
 --// AUTO SPECIAL SKILL
-local AutoSpecialSkillBox = Tab2:AddLeftGroupbox("Auto Special Skill")
+local AutoSpecialSkillBox = Tab2:AddRightGroupbox("Auto Special Skill")
 
 local AutoSkillPsiEnabled = false
 local AutoSkillPsiThread = nil
@@ -4338,36 +4338,3 @@ AutoSpecialSkillBox:AddToggle("AutoSkillPsi", {
         end)
     end
 })
-local CommonBox = Tab:AddRightGroupbox("Common")
-
-local AutoRebirth = CommonBox:AddToggle("AutoRebirth", {
-    Text = "Auto Rebirth",
-    Default = false,
-})
-
-local Running = false
-
-AutoRebirth:OnChanged(function(Value)
-    Running = Value
-
-    if Value then
-        task.spawn(function()
-            while Running do
-                pcall(function()
-                    game:GetService("ReplicatedStorage")
-                        :WaitForChild("Packages")
-                        :WaitForChild("_Index")
-                        :WaitForChild("sleitnick_knit@1.4.7")
-                        :WaitForChild("knit")
-                        :WaitForChild("Services")
-                        :WaitForChild("PlayerLevelService")
-                        :WaitForChild("RF")
-                        :WaitForChild("RequestRebirth")
-                        :InvokeServer(true)
-                end)
-
-                task.wait(1.5)
-            end
-        end)
-    end
-end)
