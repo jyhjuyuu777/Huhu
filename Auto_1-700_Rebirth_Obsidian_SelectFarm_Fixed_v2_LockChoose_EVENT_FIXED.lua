@@ -9,7 +9,7 @@ local Obsidian = loadstring(game:HttpGet(
 ))()
 
 local Window = Obsidian:CreateWindow({
-    Title = "Auto 1-700 Rebirth",
+    Title = "Dragon blox [Free]",
     Footer = "Combined Farm",
     Center = true,
     AutoShow = true
