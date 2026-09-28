@@ -4338,13 +4338,36 @@ AutoSpecialSkillBox:AddToggle("AutoSkillPsi", {
         end)
     end
 })
-local AutoPopBox = Tab2:AddRightGroupbox("Auto Special Skill")
-local TestBox = Tab2:AddRightGroupbox("Test")
+local CommonBox = Tab:AddRightGroupbox("Common")
 
-TestBox:AddToggle("TestToggle", {
-    Text = "ON / OFF",
+local AutoRebirth = CommonBox:AddToggle("AutoRebirth", {
+    Text = "Auto Rebirth",
     Default = false,
-    Callback = function(Value)
-        -- Không có code
-    end
 })
+
+local Running = false
+
+AutoRebirth:OnChanged(function(Value)
+    Running = Value
+
+    if Value then
+        task.spawn(function()
+            while Running do
+                pcall(function()
+                    game:GetService("ReplicatedStorage")
+                        :WaitForChild("Packages")
+                        :WaitForChild("_Index")
+                        :WaitForChild("sleitnick_knit@1.4.7")
+                        :WaitForChild("knit")
+                        :WaitForChild("Services")
+                        :WaitForChild("PlayerLevelService")
+                        :WaitForChild("RF")
+                        :WaitForChild("RequestRebirth")
+                        :InvokeServer(true)
+                end)
+
+                task.wait(1.5)
+            end
+        end)
+    end
+end)
